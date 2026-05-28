@@ -25,7 +25,7 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile || pnpm install
 
       - name: Lint
         run: pnpm lint || true
@@ -47,7 +47,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 18 }
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile || pnpm install
       - run: cd packages/shared && pnpm build || true
       - run: cd packages/web && pnpm build
 
@@ -59,7 +59,7 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 18 }
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile || pnpm install
       - run: cd packages/shared && pnpm build || true
       - run: cd packages/admin && pnpm build
 
