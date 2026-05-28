@@ -1,0 +1,31 @@
+@import './dark-mode.scss';
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.page {
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-color-primary);
+  margin-bottom: 16px;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

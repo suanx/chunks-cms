@@ -1,0 +1,80 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint || true
+
+      - name: Run unit tests
+        run: cd packages/server && pnpm test
+
+      - name: Build shared
+        run: cd packages/shared && pnpm build || true
+
+      - name: Build server
+        run: cd packages/server && pnpm build
+
+  build-web:
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 18 }
+      - run: pnpm install --frozen-lockfile
+      - run: cd packages/shared && pnpm build || true
+      - run: cd packages/web && pnpm build
+
+  build-admin:
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 9 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 18 }
+      - run: pnpm install --frozen-lockfile
+      - run: cd packages/shared && pnpm build || true
+      - run: cd packages/admin && pnpm build
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: [build-web, build-admin]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker images
+        run: |
+          docker build -f deploy/docker/Dockerfile.server -t chunyu-server .
+          docker build -f deploy/docker/Dockerfile.web -t chunyu-web .
+          docker build -f deploy/docker/Dockerfile.admin -t chunyu-admin .

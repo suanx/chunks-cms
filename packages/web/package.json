@@ -1,0 +1,29 @@
+{
+  "name": "@chunyu/web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt dev --port 3000",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt": "^3.16.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0",
+    "element-plus": "^2.9.0",
+    "@element-plus/icons-vue": "^2.3.0",
+    "axios": "^1.7.0",
+    "swiper": "^11.0.0",
+    "@vueuse/core": "^12.0.0",
+        "dayjs": "^1.11.0",
+    "@sentry/nuxt": "^8.0.0"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^2.0.0",
+    "sass": "^1.82.0",
+    "unplugin-auto-import": "^19.0.0",
+    "unplugin-vue-components": "^28.0.0"
+  }
+}

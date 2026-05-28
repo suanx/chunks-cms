@@ -1,0 +1,35 @@
+{
+  "name": "chunyu-cms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "淳渔 CMS — 影视内容管理系统",
+  "scripts": {
+    "dev:server": "pnpm --filter @chunyu/server dev",
+    "dev:web": "pnpm --filter @chunyu/web dev",
+    "dev:admin": "pnpm --filter @chunyu/admin dev",
+    "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:web\" \"pnpm dev:admin\"",
+    "build:server": "pnpm --filter @chunyu/server build",
+    "build:web": "pnpm --filter @chunyu/web build",
+    "build:admin": "pnpm --filter @chunyu/admin build",
+    "build": "pnpm build:server && pnpm build:web && pnpm build:admin",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"packages/**/*.{ts,tsx,vue,json,scss}\"",
+    "db:migrate": "pnpm --filter @chunyu/server migration:run",
+    "db:seed": "pnpm --filter @chunyu/server seed",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "concurrently": "^9.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}

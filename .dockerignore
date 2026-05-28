@@ -1,0 +1,40 @@
+# ---- 依赖目录 ----
+node_modules
+**/node_modules
+
+# ---- 构建产物（避免复制进 context）----
+**/dist
+**/.output
+**/.nuxt
+**/.next
+
+# ---- 开发文件 ----
+.git
+.github
+.vscode
+.idea
+*.md
+!README.md
+.env
+.env.*
+!.env.example
+
+# ---- 日志 ----
+*.log
+logs/
+
+# ---- 测试 ----
+**/*.spec.ts
+**/*.test.ts
+**/test
+**/e2e
+coverage/
+
+# ---- Docker ----
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# ---- 系统文件 ----
+.DS_Store
+Thumbs.db

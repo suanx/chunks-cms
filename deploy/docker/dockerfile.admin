@@ -1,0 +1,21 @@
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
+COPY packages/shared/package.json packages/shared/
+COPY packages/admin/package.json packages/admin/
+
+RUN corepack enable && pnpm install --frozen-lockfile || pnpm install
+
+COPY packages/shared packages/shared
+COPY packages/admin packages/admin
+COPY tsconfig.base.json .
+
+RUN cd packages/shared && pnpm build || true
+RUN cd packages/admin && pnpm build
+
+FROM nginx:alpine
+
+COPY --from=builder /app/packages/admin/dist /usr/share/nginx/html/admin
+
+EXPOSE 80

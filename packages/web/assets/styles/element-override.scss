@@ -1,0 +1,13 @@
+.el-pagination {
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.el-card {
+  border-radius: var(--radius-base);
+  transition: box-shadow var(--transition-duration);
+  
+  &:hover {
+    box-shadow: var(--shadow-base);
+  }
+}
